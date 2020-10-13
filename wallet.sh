@@ -94,6 +94,7 @@ clear
 pwd
 cd ./tonos-cli
 cat data/rawaddr.txt 
+cd ..
 }
 
 function  step2 {

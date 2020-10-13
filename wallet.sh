@@ -61,10 +61,13 @@ else
   cp ./data/rawaddr.txt ./to_ton-keys_folder/hostname.addr
   cp ./deploy.keys.json ./to_ton-keys_folder/msig.keys.json
   mkdir ./SWData
+  cd ..
   clear
   echo -e "Succeeded\n\nAll keys: ./data\n\nLogs: ./log_step1.txt\n\nTo check the log:\ncat log_step1.txt\n\nLink to your account (ton.live): ./account.link.txt\n\nGet tokens to your address:\n${rawaddr}\n\nThen Step2"
 fi
 }
+
+
 function  checkbalance {
 clear
 cd ./tonos-cli
@@ -87,6 +90,7 @@ fi
 
 function  showaddress {
 clear
+pwd
 cd ./tonos-cli
 cat data/rawaddr.txt 
 }
@@ -134,6 +138,7 @@ echo -e "\t\t\tWallet deploying\n"
 echo -e "\t1. Step 1"
 echo -e "\t2. Check balance"
 echo -e "\t3. Step 2"
+echo -e "\t4. Show address"
 echo -e "\t0. Exit"
 echo -en "\t\tEnter number: "
 read -n 1 option

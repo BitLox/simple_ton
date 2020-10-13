@@ -79,7 +79,8 @@ else
   echo $balance > GetBalance.sh
   chmod +x GetBalance.sh
   clear
-  cd
+  pwd
+  cd ..
   ./wallet.sh
 fi
 }

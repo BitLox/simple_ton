@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 function step1 {
 clear
 #Check for folder

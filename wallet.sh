@@ -83,7 +83,6 @@ else
   echo $balance > GetBalance.sh
   chmod +x GetBalance.sh
   clear
-  pwd
   cd ..
   ./wallet.sh
 fi
@@ -91,7 +90,6 @@ fi
 
 function  showaddress {
 clear
-pwd
 cd ./tonos-cli
 cat data/rawaddr.txt 
 cd ..
@@ -130,6 +128,7 @@ chmod +x custocheck.tmp.sh
 ./custocheck.tmp.sh >> log_step2.txt
 rm custocheck.tmp.sh
 clear
+cd ..
 echo -e "Succeeded\n\nLogs: ./log_step2.txt\n\nTo check the log:\ncat log_step2.txt"
 }
 #Menu

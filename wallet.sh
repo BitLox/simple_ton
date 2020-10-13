@@ -146,7 +146,7 @@ do
         step2 ;;
 *)
         clear
-echo "Need to choose";;
+echo "Need to choose yar";;
 esac
 echo -en "\n\n\t\t\tPress any key to continue"
 read -n 1 line

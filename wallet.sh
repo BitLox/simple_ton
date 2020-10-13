@@ -12,10 +12,10 @@ else
   echo "${folder} not exist"
   #Download components and create a folder
   wget https://github.com/tonlabs/tonos-cli/releases/download/v0.1.1/tonos-cli_v0.1.1_linux.tar.gz
-  mkdir ~/tonos-cli
-  tar -xvf tonos-cli_v0.1.1_linux.tar.gz -C ~/tonos-cli
+  mkdir ./tonos-cli
+  tar -xvf tonos-cli_v0.1.1_linux.tar.gz -C ./tonos-cli
   rm tonos-cli_v0.1.1_linux.tar.gz
-  cd ~/tonos-cli
+  cd ./tonos-cli
   wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.abi.json
   wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.tvc
   #Network configuration
@@ -58,17 +58,16 @@ else
   tonlive="https://net.ton.live/accounts?section=details&id=${rawaddr}"
   echo $tonlive > account.link.txt
   mkdir to_ton-keys_folder
-  cp ~/tonos-cli/data/rawaddr.txt ~/tonos-cli/to_ton-keys_folder/hostname.addr
-  cp ~/tonos-cli/deploy.keys.json ~/tonos-cli/to_ton-keys_folder/msig.keys.json
-  mkdir ~/tonos-cli/SWData
+  cp ./data/rawaddr.txt ./to_ton-keys_folder/hostname.addr
+  cp ./deploy.keys.json ./to_ton-keys_folder/msig.keys.json
+  mkdir ./SWData
   clear
-  echo -e "Succeeded\n\nAll keys: /tonos-cli/data\n\nLogs: /tonos-cli/log_step1.txt\n\nTo check the log:\ncd\ncd tonos-cli\ncat log_step1.txt\n\nLink to your account (ton.live): /tonos-cli/account.link.txt\n\nGet tokens to your address:\n${rawaddr}\n\nThen Step2.sh"
+  echo -e "Succeeded\n\nAll keys: ./data\n\nLogs: ./log_step1.txt\n\nTo check the log:\ncat log_step1.txt\n\nLink to your account (ton.live): ./account.link.txt\n\nGet tokens to your address:\n${rawaddr}\n\nThen Step2.sh"
 fi
 }
 function  checkbalance {
 clear
-cd
-cd tonos-cli
+cd .tonos-cli
 file="GetBalance.sh"
 if [ -f ${file} ]
 then
@@ -87,8 +86,7 @@ fi
 
 function  step2 {
 clear
-cd
-cd tonos-cli
+cd ./tonos-cli
 #Deploy the multisignature code and data to the blockchain (3.2.4)
 pubkey=$(cat data/pubkey.txt)
 deploy="./tonos-cli deploy SafeMultisigWallet.tvc '{\"owners\":[\"0x${pubkey}\"],\"reqConfirms\":1}' 
@@ -119,7 +117,7 @@ chmod +x custocheck.tmp.sh
 ./custocheck.tmp.sh >> log_step2.txt
 rm custocheck.tmp.sh
 clear
-echo -e "Succeeded\n\nLogs: /tonos-cli/log_step2.txt\n\nTo check the log:\ncd\ncd tonos-cli\ncat log_step2.txt"
+echo -e "Succeeded\n\nLogs: ./log_step2.txt\n\nTo check the log:\ncat log_step2.txt"
 }
 #Menu
 function menu {

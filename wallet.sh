@@ -11,7 +11,7 @@ then
 else
   echo "${folder} not exist"
   #Download components and create a folder
-  wget https://github.com/tonlabs/tonos-cli/releases/download/v0.1.1/tonos-cli_v0.1.1_linux.tar.gz
+  wget https://github.com/tonlabs/tonos-cli/releases/download/v0.1.17/tonos-cli_v0.1.17_linux.tar.gz
   mkdir ./tonos-cli
   tar -xvf tonos-cli_v0.1.1_linux.tar.gz -C ./tonos-cli
   rm tonos-cli_v0.1.1_linux.tar.gz

@@ -62,12 +62,12 @@ else
   cp ./deploy.keys.json ./to_ton-keys_folder/msig.keys.json
   mkdir ./SWData
   clear
-  echo -e "Succeeded\n\nAll keys: ./data\n\nLogs: ./log_step1.txt\n\nTo check the log:\ncat log_step1.txt\n\nLink to your account (ton.live): ./account.link.txt\n\nGet tokens to your address:\n${rawaddr}\n\nThen Step2.sh"
+  echo -e "Succeeded\n\nAll keys: ./data\n\nLogs: ./log_step1.txt\n\nTo check the log:\ncat log_step1.txt\n\nLink to your account (ton.live): ./account.link.txt\n\nGet tokens to your address:\n${rawaddr}\n\nThen Step2"
 fi
 }
 function  checkbalance {
 clear
-cd .tonos-cli
+cd ./tonos-cli
 file="GetBalance.sh"
 if [ -f ${file} ]
 then
@@ -83,6 +83,12 @@ else
   cd ..
   ./wallet.sh
 fi
+}
+
+function  showaddress {
+clear
+cd ./tonos-cli
+cat data/rawaddr.txt 
 }
 
 function  step2 {
@@ -145,6 +151,8 @@ do
         checkbalance ;;
 3)
         step2 ;;
+4)
+        showaddress ;;
 *)
         clear
 echo "Need to choose yar";;

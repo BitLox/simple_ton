@@ -1,25 +1,47 @@
 #!/bin/bash
-cd
-cd tonos-cli
+
+cd ./tonos-cli
 
 folder="SWData"
 
 if [ -d ${folder} ]
 then
-  function checkbalance {
+
+function  checkbalance {
 clear
+file="GetBalance.sh"
+if [ -f ${file} ]
+then
 ./GetBalance.sh > SWData/lastbalance.txt
-sed -e '/bal/!d' -e 's/bal.*:       //' SWData/lastbalance.txt
+#LINUX sed -e '/bal/!d' -e 's/bal.*:       //' SWData/lastbalance.txt
+sed '/bal/!d' SWData/lastbalance.txt > SWData/lastbalance.tmp.txt
+sed 's/bal.*:       //' SWData/lastbalance.tmp.txt > SWData/lastbalance.txt
+rm SWData/lastbalance.tmp.txt
+cat SWData/lastbalance.txt
+# cd ..
+else
+  rawaddr=$(cat data/rawaddr.txt)
+  balance="./tonos-cli account ${rawaddr}"
+  echo $balance > GetBalance.sh
+  chmod +x GetBalance.sh
+  clear
+  .././sw.sh
+fi
 }
+
 function  sendtokens {
 clear
 rawaddr=$(cat data/rawaddr.txt)
 phrase=$(cat data/phrase.txt)
-recipient=$(gdialog --title "Data enter" --inputbox "Address of the recipient:" 50 60 2>&1)
-amount=$(gdialog --title "Data enter" --inputbox "Amount:" 50 60 2>&1)
-trans="./tonos-cli call ${rawaddr} submitTransaction 
-'{\"dest\":\"${recipient}\",\"value\":${amount},\"bounce\":false,\"allBalance\":false,\"payload\":\"\"}' 
---abi SafeMultisigWallet.abi.json --sign ${phrase}"
+echo "Address of the recipient: "
+read recipientInput
+recipient=$recipientInput
+#LINUX recipient=$(gdialog --title "Data enter" --inputbox "Address of the recipient:" 50 60 2>&1)
+echo "Amount: "
+read amountInput
+amount=$amountInput
+#LINUX amount=$(gdialog --title "Data enter" --inputbox "Amount:" 50 60 2>&1)
+trans="./tonos-cli call ${rawaddr} submitTransaction '{\"dest\":\"${recipient}\",\"value\":${amount},\"bounce\":false,\"allBalance\":false,\"payload\":\"\"}' --abi SafeMultisigWallet.abi.json --sign ${phrase}"
 echo -n "Do you really want to send ${amount} tokens to address ${recipient} (y/n) "
 
 read item
@@ -39,7 +61,7 @@ esac
   function checktrans {
 clear
 rawaddr=$(cat data/rawaddr.txt)
-tonlive="Your transactions here: https://net.ton.live/accounts?section=details&id=${rawaddr}"
+tonlive="Your transactions are here: https://ton.live/accounts?section=details&id=${rawaddr}"
 echo $tonlive
 }
 #Menu
@@ -74,6 +96,7 @@ esac
 echo -en "\n\n\t\t\tPress any key to continue"
 read -n 1 line
 done
+cd ..
 clear
 
 exit
@@ -84,6 +107,6 @@ else
   echo $balance > GetBalance.sh
   chmod +x GetBalance.sh
   clear
-  cd
+  cd ..
   ./sw.sh
 fi

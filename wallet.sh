@@ -76,6 +76,7 @@ if [ -f ${file} ]
 then
 ./GetBalance.sh > SWData/lastbalance.txt
 sed -e '/bal/!d' -e 's/bal.*:       //' SWData/lastbalance.txt
+cd ..
 else
   rawaddr=$(cat data/rawaddr.txt)
   balance="./tonos-cli account ${rawaddr}"

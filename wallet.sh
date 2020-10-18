@@ -101,8 +101,6 @@ else
     sed 's/R.* //' data/rawaddr.tmp.txt > data/rawaddr.txt
     rm data/rawaddr.tmp.txt
   fi
-
-  
   
   #Link to ton.live account
   rawaddr=$(cat data/rawaddr.txt)
@@ -117,17 +115,18 @@ else
 fi
 }
 
-
 function  checkbalance {
 clear
 cd ./tonos-cli
 file="GetBalance.sh"
+
 if [ -f ${file} ]
 then
-./GetBalance.sh > SWData/lastbalance.txt
+  ./GetBalance.sh > SWData/lastbalance.txt
   if [ "$os_type" == 'LINUX' ] 
   then
     sed -e '/bal/!d' -e 's/bal.*:       //' SWData/lastbalance.txt
+    cd ..
   fi
   if [ "$os_type" == 'OSX' ]
     then
@@ -165,6 +164,7 @@ status="./tonos-cli account ${rawaddr}"
 echo $status > StatCheck.sh
 chmod +x StatCheck.sh
 ./StatCheck.sh >> log_step2.txt
+
 #Creating transaction online (5 tokens to address 0:2fa8e77ea0855ce446bd60e22035a48d484f55fc05e669661f16f8fb063beacb)
 # phrase=$(cat data/phrase.txt)
 # trans="./tonos-cli call ${rawaddr} submitTransaction '{\"dest\":\"0:2fa8e77ea0855ce446bd60e22035a48d484f55fc05e669661f16f8fb063beacb\",\"value\":5000000000,\"bounce\":false,\"allBalance\":false,\"payload\":\"\"}' --abi SafeMultisigWallet.abi.json --sign ${phrase}"
@@ -172,6 +172,7 @@ chmod +x StatCheck.sh
 # chmod +x trans.tmp.sh
 # ./trans.tmp.sh >> log_step2.txt
 # rm trans.tmp.sh
+
 #Requesting the list of custodian public keys from the blockchain
 custocheck="./tonos-cli run ${rawaddr} getCustodians {} --abi SafeMultisigWallet.abi.json"
 echo $custocheck > custocheck.tmp.sh

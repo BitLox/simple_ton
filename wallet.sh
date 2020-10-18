@@ -10,7 +10,7 @@ if [ -d ${folder} ]
 then
   echo "folder ${folder} already exist!"
 else
-  echo "${folder} not exist"
+  echo "${folder} does not exist"
   #Download components and create a folder
   #LINUX wget https://github.com/tonlabs/tonos-cli/releases/download/v0.1.1/tonos-cli_v0.1.1_linux.tar.gz
   wget https://github.com/BitLox/tonos-cli/releases/download/v0.1.17/tonos-cli_v0.1.17_darwin.tar.gz

@@ -14,7 +14,7 @@ The script automatically performs all the necessary actions with the wallet, you
 4. Saving keys and logs.
 5. Creating the hostname.addr and msig.keys.json files that are needed for the node to work.
 6. Create a wallet link (ton.live).
-7. Performing a test transaction for 5 tokens (5,000,000,000) to the address -1: 2e66c896772a6a936d4077ca3472af27bc80bb307b920c8d87b48e6bd066c46d
+7. ~~Performing a test transaction for 5 tokens (5,000,000,000) to the address -1: 2e66c896772a6a936d4077ca3472af27bc80bb307b920c8d87b48e6bd066c46d~~
 
 Step 1 - Perform the initial operations before receiving the raw address.
 
@@ -36,7 +36,7 @@ Current Functions:
 1. Balance check
 2. Sending tokens (the number of tokens and the address are indicated in the pop-up windows)
 3. Link to account (ton.live)
- 
+
 Uses the files created by wallet.sh:
 
 / tonos-cli / tonos-cli

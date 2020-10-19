@@ -1,5 +1,7 @@
 #!/bin/bash
 
+function DoBashThings {
+
 case "$OSTYPE" in
   solaris*) os_type="SOLARIS" ;; 
   darwin*)  os_type="OSX" ;; 
@@ -37,10 +39,10 @@ else
   fi
   if [ "$os_type" == 'WINDOWS' ]
       then
-        wget https://github.com/BitLox/tonos-cli/releases/download/v0.1.17/tonos-cli_v0.1.17_darwin.tar.gz
-        mkdir ./tonos-cli
-        tar -xvf tonos-cli_v0.1.17_darwin.tar.gz -C ./tonos-cli
-        rm tonos-cli_v0.1.17_darwin.tar.gz
+        wget https://github.com/BitLox/tonos-cli/releases/download/v0.1.17/tonos-cli_v0.1.17_msvc.zip
+        #mkdir ./tonos-cli
+        unzip tonos-cli_v0.1.17_msvc.zip
+        rm tonos-cli_v0.1.17_msvc.zip
   fi
   cd ./tonos-cli
   wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.abi.json
@@ -235,5 +237,14 @@ echo -en "\n\n\t\t\tPress any key to continue"
 read -n 1 line
 done
 clear
+}
+"DoBashThings"
+"exit"
 
-exit
+
+# PowerShell code here
+# --------------------
+Invoke-WebRequest "https://github.com/BitLox/tonos-cli/releases/download/v0.1.17/tonos-cli_v0.1.17_msvc.zip" -OutFile tonos-cli_v0.1.17_msvc.zip
+$env:script_source="https://github.com"
+$env:some_value="floob"
+PowerShell Expand-Archive -LiteralPath .\tonos-cli_v0.1.17_msvc.zip -DestinationPath .\tonos-cli

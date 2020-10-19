@@ -154,6 +154,14 @@ else
 fi
 }
 
+function  showaddress {
+clear
+cd ./tonos-cli
+cat data/rawaddr.txt
+cd ..
+}
+
+
 function  step2 {
 clear
 cd ./tonos-cli
@@ -199,6 +207,7 @@ echo -e "\t\t\tWallet deploying\n"
 echo -e "\t1. Step 1"
 echo -e "\t2. Check balance"
 echo -e "\t3. Step 2"
+echo -e "\t4. Show address"
 echo -e "\t0. Exit"
 echo -en "\t\tEnter number: "
 read -n 1 option
@@ -216,6 +225,8 @@ do
         checkbalance ;;
 3)
         step2 ;;
+4)
+        showaddress ;;        
 *)
         clear
 echo "Need to choose";;

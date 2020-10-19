@@ -29,11 +29,18 @@ else
       rm tonos-cli_v0.1.17_linux.tar.gz
   fi
   if [ "$os_type" == 'OSX' ]
-    then
-      wget https://github.com/BitLox/tonos-cli/releases/download/v0.1.17/tonos-cli_v0.1.17_darwin.tar.gz
-      mkdir ./tonos-cli
-      tar -xvf tonos-cli_v0.1.17_darwin.tar.gz -C ./tonos-cli
-      rm tonos-cli_v0.1.17_darwin.tar.gz
+      then
+        wget https://github.com/BitLox/tonos-cli/releases/download/v0.1.17/tonos-cli_v0.1.17_darwin.tar.gz
+        mkdir ./tonos-cli
+        tar -xvf tonos-cli_v0.1.17_darwin.tar.gz -C ./tonos-cli
+        rm tonos-cli_v0.1.17_darwin.tar.gz
+  fi
+  if [ "$os_type" == 'WINDOWS' ]
+      then
+        wget https://github.com/BitLox/tonos-cli/releases/download/v0.1.17/tonos-cli_v0.1.17_darwin.tar.gz
+        mkdir ./tonos-cli
+        tar -xvf tonos-cli_v0.1.17_darwin.tar.gz -C ./tonos-cli
+        rm tonos-cli_v0.1.17_darwin.tar.gz
   fi
   cd ./tonos-cli
   wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.abi.json

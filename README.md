@@ -1,5 +1,9 @@
 # Description
 
+The script will automatically determine the host system, MacOSX or Linux.
+
+MS Windows support is in the works.
+
 # wallet.sh (./wallet.sh)
 
 This script is suitable for quick deployment of a wallet from scratch. Performing the necessary actions before receiving tokens and after.

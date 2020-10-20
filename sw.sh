@@ -1,5 +1,5 @@
 #!/bin/bash
-cd
+
 cd tonos-cli
 
 folder="SWData"

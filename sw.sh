@@ -15,12 +15,22 @@ function  sendtokens {
 clear
 rawaddr=$(cat data/rawaddr.txt)
 phrase=$(cat data/phrase.txt)
-recipient=$(gdialog --title "Data enter" --inputbox "Address of the recipient:" 50 60 2>&1)
-amount=$(gdialog --title "Data enter" --inputbox "Amount:" 50 60 2>&1)
-trans="./tonos-cli call ${rawaddr} submitTransaction 
-'{\"dest\":\"${recipient}\",\"value\":${amount},\"bounce\":false,\"allBalance\":false,\"payload\":\"\"}' 
---abi SafeMultisigWallet.abi.json --sign ${phrase}"
+echo "Address of the recipient: "
+read recipientInput
+recipient=$recipientInput
+#LINUX recipient=$(gdialog --title "Data enter" --inputbox "Address of the recipient:" 50 60 2>&1)
+echo "Amount: "
+read amountInput
+amount=$amountInput
+#LINUX amount=$(gdialog --title "Data enter" --inputbox "Amount:" 50 60 2>&1)
+trans="./tonos-cli call ${rawaddr} submitTransaction '{\"dest\":\"${recipient}\",\"value\":${amount},\"bounce\":false,\"allBalance\":false,\"payload\":\"\"}' --abi SafeMultisigWallet.abi.json --sign ${phrase}"
 echo -n "Do you really want to send ${amount} tokens to address ${recipient} (y/n) "
+# recipient=$(gdialog --title "Data enter" --inputbox "Address of the recipient:" 50 60 2>&1)
+# amount=$(gdialog --title "Data enter" --inputbox "Amount:" 50 60 2>&1)
+# trans="./tonos-cli call ${rawaddr} submitTransaction 
+# '{\"dest\":\"${recipient}\",\"value\":${amount},\"bounce\":false,\"allBalance\":false,\"payload\":\"\"}' 
+# --abi SafeMultisigWallet.abi.json --sign ${phrase}"
+# echo -n "Do you really want to send ${amount} tokens to address ${recipient} (y/n) "
 
 read item
 case "$item" in

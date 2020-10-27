@@ -87,7 +87,7 @@ else
   ./keypair.tmp.sh >> log_step1.txt
   rm keypair.tmp.sh
   #Generating multisignature wallet address (Raw address)
-  ./tonos-cli genaddr SafeMultisigWallet.tvc SafeMultisigWallet.abi.json --setkey deploy.keys.json --wc -1 > data/rawaddr.txt
+  ./tonos-cli genaddr SafeMultisigWallet.tvc SafeMultisigWallet.abi.json --setkey deploy.keys.json --wc 0 > data/rawaddr.txt
   #Sending a response to the log
   cat data/rawaddr.txt >> log_step1.txt
   #Removing junk data from raw address response

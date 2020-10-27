@@ -39,7 +39,7 @@ else
   wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.abi.json
   wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.tvc
   #Network configuration
-  ./tonos-cli config --url https://net.ton.dev >> log_step1.txt
+  ./tonos-cli config --url https://main.ton.dev >> log_step1.txt
   #Creating a folder for keys
   mkdir data
   #Generating seed phrase (3.1.1)

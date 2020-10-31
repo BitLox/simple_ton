@@ -161,7 +161,7 @@ cd ./tonos-cli
 #Deploy the multisignature code and data to the blockchain (3.2.4)
 pubkey=$(cat data/pubkey.txt)
 deploy="./tonos-cli deploy SafeMultisigWallet.tvc '{\"owners\":[\"0x${pubkey}\"],\"reqConfirms\":1}' 
---abi SafeMultisigWallet.abi.json --sign deploy.keys.json --wc -1"
+--abi SafeMultisigWallet.abi.json --sign deploy.keys.json --wc 0"
 echo $deploy  > deploy.tmp.sh
 chmod +x deploy.tmp.sh
 ./deploy.tmp.sh >> log_step2.txt

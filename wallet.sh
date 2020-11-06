@@ -30,10 +30,10 @@ else
   fi
   if [ "$os_type" == 'OSX' ]
     then
-      wget https://github.com/BitLox/tonos-cli/releases/download/v0.1.17/tonos-cli_v0.1.17_darwin.tar.gz
+      wget https://github.com/BitLox/tonos-cli/releases/download/v0.1.25/tonos-cli_v0.1.25_darwin.tar.gz
       mkdir ./tonos-cli
-      tar -xvf tonos-cli_v0.1.17_darwin.tar.gz -C ./tonos-cli
-      rm tonos-cli_v0.1.17_darwin.tar.gz
+      tar -xvf tonos-cli_v0.1.25_darwin.tar.gz -C ./tonos-cli
+      rm tonos-cli_v0.1.25_darwin.tar.gz
   fi
   cd ./tonos-cli
   wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.abi.json

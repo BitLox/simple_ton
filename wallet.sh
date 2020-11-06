@@ -77,6 +77,7 @@ else
   then
     sed '/Public*/! d' data/pubkey.txt > data/pubkey.tmp.txt
     sed 's/P.* //' data/pubkey.tmp.txt > data/pubkey.txt
+    rm data/pubkey.tmp.txt
   fi
 
   #Generating deployment key pair (3.2.1)

@@ -105,7 +105,7 @@ else
   
   #Link to ton.live account
   rawaddr=$(cat data/rawaddr.txt)
-  tonlive="https://net.ton.live/accounts?section=details&id=${rawaddr}"
+  tonlive="https://main.ton.live/accounts?section=details&id=${rawaddr}"
   echo $tonlive > account.link.txt
   mkdir to_ton-keys_folder
   cp ./data/rawaddr.txt ./to_ton-keys_folder/hostname.addr

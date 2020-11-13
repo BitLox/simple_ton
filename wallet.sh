@@ -18,7 +18,8 @@ if [ -d ${folder} ]
 then
   echo "folder ${folder} already exists!"
 else
-  echo "${folder} does not exist"
+  echo "${folder} does not exist, fetching"
+  echo
   #Download components and create a folder
   
   if [ "$os_type" == 'LINUX' ] 
@@ -39,24 +40,62 @@ else
   wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.abi.json
   wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.tvc
   #Network configuration
-  ./tonos-cli config --url https://main.ton.dev >> log_step1.txt
-  #Creating a folder for keys
-  mkdir data
-  #Generating seed phrase (3.1.1)
-  ./tonos-cli genphrase > data/phrase.txt
-  #Sending a response to the log
-  cat data/phrase.txt >> log_step1.txt
-  #Ydalenie lishnego iz frazu
-  if [ "$os_type" == 'LINUX' ] 
-  then
-    sed -i -e 's/[^"]*//' -e '/^$/d' data/phrase.txt
-  fi
-  if [ "$os_type" == 'OSX' ]
-  then
-  sed 's/[^"]*//' data/phrase.txt > data/phrase.tmp.txt
-    tr -d '\n' <    data/phrase.tmp.txt > data/phrase.txt 
-    rm data/phrase.tmp.txt
-  fi
+  # echo "Choose network, main or dev: "
+  # read networkInput
+  # network=$networkInput
+  
+#Creating a folder for keys
+mkdir data
+  
+  
+#While & Case
+while [ $? -ne 1 ]
+do
+        networkMenu
+        case $optionNet in
+1)
+        setMain ;;
+2)
+        setDev ;;
+esac
+read -n 1 line
+done
+clear
+
+#While & Case
+while [ $? -ne 1 ]
+do
+        wcMenu
+        case $optionWC in
+1)
+        setZero ;;
+2)
+        setMinusOne ;;
+esac
+read -n 1 line
+done
+clear
+
+#While & Case
+while [ $? -ne 1 ]
+do
+        phraseMenu
+        case $optionPhrase in
+1)
+        setGenPhrase ;;
+2)
+        setCustomPhrase ;;
+esac
+read -n 1 line
+done
+clear
+
+  
+  
+  
+./tonos-cli config --url https://$network.ton.dev >> log_step1.txt
+./tonos-cli config --wc $workchain >> log_step1.txt
+  
 
   #Creating a temporary file for generating public key
   phrase=$(cat data/phrase.txt)
@@ -88,7 +127,7 @@ else
   ./keypair.tmp.sh >> log_step1.txt
   rm keypair.tmp.sh
   #Generating multisignature wallet address (Raw address)
-  ./tonos-cli genaddr SafeMultisigWallet.tvc SafeMultisigWallet.abi.json --setkey deploy.keys.json --wc 0 > data/rawaddr.txt
+  ./tonos-cli genaddr SafeMultisigWallet.tvc SafeMultisigWallet.abi.json --setkey deploy.keys.json --wc $workchain > data/rawaddr.txt
   #Sending a response to the log
   cat data/rawaddr.txt >> log_step1.txt
   #Removing junk data from raw address response
@@ -105,7 +144,7 @@ else
   
   #Link to ton.live account
   rawaddr=$(cat data/rawaddr.txt)
-  tonlive="https://main.ton.live/accounts?section=details&id=${rawaddr}"
+  tonlive="https://${network}.ton.live/accounts?section=details&id=${rawaddr}"
   echo $tonlive > account.link.txt
   mkdir to_ton-keys_folder
   cp ./data/rawaddr.txt ./to_ton-keys_folder/hostname.addr
@@ -155,6 +194,54 @@ function  showaddress {
   cd ..
 }
 
+function setGenPhrase {
+#Generating seed phrase (3.1.1)
+./tonos-cli genphrase > data/phrase.txt
+#Sending a response to the log
+cat data/phrase.txt >> log_step1.txt
+#Ydalenie lishnego iz frazu
+if [ "$os_type" == 'LINUX' ] 
+then
+  sed -i -e 's/[^"]*//' -e '/^$/d' data/phrase.txt
+fi
+if [ "$os_type" == 'OSX' ]
+then
+sed 's/[^"]*//' data/phrase.txt > data/phrase.tmp.txt
+  tr -d '\n' <    data/phrase.tmp.txt > data/phrase.txt 
+  rm data/phrase.tmp.txt
+fi
+break;
+}
+
+function setCustomPhrase {
+  echo
+echo -e "\t\tSecret phrase:"  
+  read inputPhrase
+  customPhrase=$inputPhrase
+  echo $inputPhrase > data/phrase.txt
+  cat data/phrase.txt >> log_step1.txt
+  break;
+}
+
+function setMain {
+  network="MAIN";
+  break;
+}
+
+function setDev {
+  network="DEV";
+  break;
+}
+
+function setZero {
+  workchain="0";
+  break;
+}
+
+function setMinusOne {
+  workchain="-1";
+  break;
+}
 
 function  step2 {
 clear
@@ -162,7 +249,7 @@ cd ./tonos-cli
 #Deploy the multisignature code and data to the blockchain (3.2.4)
 pubkey=$(cat data/pubkey.txt)
 deploy="./tonos-cli deploy SafeMultisigWallet.tvc '{\"owners\":[\"0x${pubkey}\"],\"reqConfirms\":1}' 
---abi SafeMultisigWallet.abi.json --sign deploy.keys.json --wc 0"
+--abi SafeMultisigWallet.abi.json --sign deploy.keys.json --wc ${workchain}"
 echo $deploy  > deploy.tmp.sh
 chmod +x deploy.tmp.sh
 ./deploy.tmp.sh >> log_step2.txt
@@ -191,6 +278,42 @@ rm custocheck.tmp.sh
 clear
 echo -e "Succeeded\n\nLogs: ./log_step2.txt\n\nTo check the log:\ncat log_step2.txt"
 }
+
+
+function phraseMenu {
+  clear
+  
+  echo "Secret phrase: " 
+  echo
+  echo -e "\t1. Auto-generate phrase"
+  echo -e "\t2. Input custom phrase"
+  echo -en "\t\tEnter choice: "
+  read -n 1 optionPhrase
+  }
+
+function networkMenu {
+  clear
+  
+  echo "Network type: " 
+  echo
+  echo -e "\t1. MAIN"
+  echo -e "\t2. DEV"
+  echo -en "\t\tEnter choice: "
+  read -n 1 optionNet
+  }
+
+function wcMenu {
+  clear
+  
+  echo "Work Chain choice: " 
+  echo
+  echo -e "\t1. 0"
+  echo -e "\t2. -1"
+  echo -en "\t\tEnter choice: "
+  read -n 1 optionWC
+  }
+
+
 #Menu
 function menu {
 clear
@@ -206,6 +329,8 @@ echo -e "\t0. Exit"
 echo -en "\t\tEnter number: "
 read -n 1 option
 }
+
+  
 #While & Case
 while [ $? -ne 1 ]
 do

@@ -16,7 +16,7 @@ folder="tonos-cli"
 
 if [ -d ${folder} ]
 then
-  echo "folder ${folder} already exists!"
+  echo "Folder ${folder} already exists!"
 else
   echo "${folder} does not exist, fetching"
   echo
@@ -150,8 +150,9 @@ clear
   cp ./data/rawaddr.txt ./to_ton-keys_folder/hostname.addr
   cp ./deploy.keys.json ./to_ton-keys_folder/msig.keys.json
   mkdir ./SWData
+  cd ..
   clear
-  echo -e "Succeeded\n\nAll keys: ./data\n\nLogs: ./log_step1.txt\n\nTo check the log:\ncat log_step1.txt\n\nLink to your account (ton.live): ./account.link.txt\n\nGet tokens to your address:\n${rawaddr}\n\nThen Step2.sh"
+  echo -e "Succeeded\n\nAll keys: ./data\n\nLogs: ./log_step1.txt\n\nTo check the log:\ncat log_step1.txt\n\nLink to your account (${network}.ton.live): ./account.link.txt\n\nSend some tokens to your address:\n${rawaddr}\n\nThen Step2.sh"
 fi
 }
 
@@ -215,7 +216,7 @@ break;
 
 function setCustomPhrase {
   echo
-echo -e "\t\tSecret phrase:"  
+echo -e "\tSecret phrase:"  
   read inputPhrase
   customPhrase=$inputPhrase
   echo $inputPhrase > data/phrase.txt
@@ -244,12 +245,15 @@ function setMinusOne {
 }
 
 function  step2 {
+  
+  # NEED TO CHECK IF STEP 1 WAS DONE
+  
 clear
 cd ./tonos-cli
 #Deploy the multisignature code and data to the blockchain (3.2.4)
 pubkey=$(cat data/pubkey.txt)
 deploy="./tonos-cli deploy SafeMultisigWallet.tvc '{\"owners\":[\"0x${pubkey}\"],\"reqConfirms\":1}' 
---abi SafeMultisigWallet.abi.json --sign deploy.keys.json --wc ${workchain}"
+--abi SafeMultisigWallet.abi.json --sign deploy.keys.json "
 echo $deploy  > deploy.tmp.sh
 chmod +x deploy.tmp.sh
 ./deploy.tmp.sh >> log_step2.txt
@@ -283,33 +287,33 @@ echo -e "Succeeded\n\nLogs: ./log_step2.txt\n\nTo check the log:\ncat log_step2.
 function phraseMenu {
   clear
   
-  echo "Secret phrase: " 
+  echo -e "\tSecret phrase: " 
   echo
   echo -e "\t1. Auto-generate phrase"
   echo -e "\t2. Input custom phrase"
-  echo -en "\t\tEnter choice: "
+  echo -en "\n\tEnter choice: "
   read -n 1 optionPhrase
   }
 
 function networkMenu {
   clear
   
-  echo "Network type: " 
+  echo -e "\tNetwork type: " 
   echo
   echo -e "\t1. MAIN"
   echo -e "\t2. DEV"
-  echo -en "\t\tEnter choice: "
+  echo -en "\n\tEnter choice: "
   read -n 1 optionNet
   }
 
 function wcMenu {
   clear
   
-  echo "Work Chain choice: " 
+  echo -e "\tWork Chain choice: " 
   echo
   echo -e "\t1. 0"
   echo -e "\t2. -1"
-  echo -en "\t\tEnter choice: "
+  echo -en "\n\tEnter choice: "
   read -n 1 optionWC
   }
 
@@ -320,13 +324,15 @@ clear
 
 echo "OS type: " $os_type
 echo
-echo -e "\t\t\tWallet deploying\n"
+echo `pwd`
+echo
+echo -e "\tWallet deployment\n"
 echo -e "\t1. Step 1"
 echo -e "\t2. Check balance"
 echo -e "\t3. Step 2"
 echo -e "\t4. Show address"
 echo -e "\t0. Exit"
-echo -en "\t\tEnter number: "
+echo -en "\n\tEnter number: "
 read -n 1 option
 }
 
@@ -350,7 +356,7 @@ do
         clear
 echo "Need to choose";;
 esac
-echo -en "\n\n\t\t\tPress any key to continue"
+echo -en "\n\n\tPress any key to continue"
 read -n 1 line
 done
 clear

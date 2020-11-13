@@ -230,7 +230,7 @@ function setMain {
 }
 
 function setDev {
-  network="DEV";
+  network="NET";
   break;
 }
 

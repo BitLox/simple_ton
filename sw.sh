@@ -49,7 +49,8 @@ esac
   function checktrans {
 clear
 rawaddr=$(cat data/rawaddr.txt)
-tonlive="Your transactions here: https://ton.live/accounts?section=details&id=${rawaddr}"
+network=$(cat data/network.txt)
+tonlive="Your transactions here: https://${network}.ton.live/accounts?section=details&id=${rawaddr}"
 echo $tonlive
 }
 #Menu

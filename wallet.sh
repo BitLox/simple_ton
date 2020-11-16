@@ -226,11 +226,13 @@ echo -e "\tSecret phrase:"
 
 function setMain {
   network="MAIN";
+  echo "MAIN" > data/network.txt
   break;
 }
 
 function setDev {
   network="NET";
+  echo "NET" > data/network.txt
   break;
 }
 

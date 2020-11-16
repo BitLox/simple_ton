@@ -283,6 +283,7 @@ chmod +x custocheck.tmp.sh
 rm custocheck.tmp.sh
 clear
 echo -e "Succeeded\n\nLogs: ./log_step2.txt\n\nTo check the log:\ncat log_step2.txt"
+cd ..
 }
 
 

@@ -90,7 +90,10 @@ read -n 1 line
 done
 clear
 
-  
+# read -p "N of M wallet - Enter N :  " nValue
+# clear
+# read -p "N of M wallet - Enter M :  " mValue
+#   
   
   
 ./tonos-cli config --url https://$network.ton.dev >> log_step1.txt
@@ -253,8 +256,23 @@ function  step2 {
 clear
 cd ./tonos-cli
 #Deploy the multisignature code and data to the blockchain (3.2.4)
+
+
+
 pubkey=$(cat data/pubkey.txt)
-deploy="./tonos-cli deploy SafeMultisigWallet.tvc '{\"owners\":[\"0x${pubkey}\"],\"reqConfirms\":1}' 
+
+read -p "N of M wallet - Enter N :  " nValue
+clear
+read -p "N of M wallet - Enter M :  " mValue
+clear  
+read -p "cosigner 1 (no 0x):  " cosigner1Pubkey
+clear
+read -p "cosigner 2 (no 0x):  " cosigner2Pubkey
+clear
+echo -e "Deploying..." 
+
+
+deploy="./tonos-cli deploy SafeMultisigWallet.tvc '{\"owners\":[\"0x${pubkey}\",\"0x${cosigner1Pubkey}\",\"0x${cosigner2Pubkey}\"],\"reqConfirms\":${nValue}}' 
 --abi SafeMultisigWallet.abi.json --sign deploy.keys.json "
 echo $deploy  > deploy.tmp.sh
 chmod +x deploy.tmp.sh
@@ -283,6 +301,7 @@ chmod +x custocheck.tmp.sh
 rm custocheck.tmp.sh
 clear
 echo -e "Succeeded\n\nLogs: ./log_step2.txt\n\nTo check the log:\ncat log_step2.txt"
+cd ..
 }
 
 

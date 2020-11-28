@@ -272,8 +272,7 @@ clear
 echo -e "Deploying..." 
 
 
-deploy="./tonos-cli deploy SafeMultisigWallet.tvc '{\"owners\":[\"0x${pubkey}\",\"0x${cosigner1Pubkey}\",\"0x${cosigner2Pubkey}\"],\"reqConfirms\":${nValue}}' 
---abi SafeMultisigWallet.abi.json --sign deploy.keys.json "
+deploy="./tonos-cli deploy SafeMultisigWallet.tvc '{\"owners\":[\"0x${pubkey}\",\"0x${cosigner1Pubkey}\",\"0x${cosigner2Pubkey}\"],\"reqConfirms\":${nValue}}' --abi SafeMultisigWallet.abi.json --sign deploy.keys.json "
 echo $deploy  > deploy.tmp.sh
 chmod +x deploy.tmp.sh
 ./deploy.tmp.sh >> log_step2.txt

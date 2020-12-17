@@ -27,9 +27,7 @@ function  sendtokens {
   echo "Purpose: "
   read purposeInput
   purpose=$purposeInput
-  #LINUX amount=$(gdialog --title "Data enter" --inputbox "Amount:" 50 60 2>&1)
-  trans="./tonos-cli multisig send --addr ${rawaddr} --dest ${recipient} --purpose ${purpose} --sign ${phrase} --value ${amount}"
-  
+  trans="./tonos-cli multisig send --addr ${rawaddr} --dest ${recipient} --purpose ${purpose} --sign ${phrase} --value ${amount}"  
   
   # trans="./tonos-cli call ${rawaddr} submitTransaction '{\"dest\":\"${recipient}\",\"value\":${amount},\"bounce\":false,\"allBalance\":false,\"payload\":\"\"}' --abi SafeMultisigWallet.abi.json --sign ${phrase} --purpose ${purpose}"
   echo -n "Do you really want to send ${amount} tokens to address ${recipient} (y/n) "

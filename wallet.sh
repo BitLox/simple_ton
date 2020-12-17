@@ -24,17 +24,17 @@ else
   
   if [ "$os_type" == 'LINUX' ] 
     then
-      wget https://github.com/tonlabs/tonos-cli/releases/download/v0.1.27/tonos-cli_v0.1.27_linux.tar.gz
+      wget https://github.com/tonlabs/tonos-cli/releases/download/v0.1.29/tonos-cli_v0.1.29_linux.tar.gz
       mkdir ./tonos-cli
-      tar -xvf tonos-cli_v0.1.27_linux.tar.gz -C ./tonos-cli
-      rm tonos-cli_v0.1.27_linux.tar.gz
+      tar -xvf tonos-cli_v0.1.29_linux.tar.gz -C ./tonos-cli
+      rm tonos-cli_v0.1.29_linux.tar.gz
   fi
   if [ "$os_type" == 'OSX' ]
     then
-      wget https://github.com/BitLox/tonos-cli/releases/download/v0.1.27/tonos-cli_v0.1.27_darwin.tar.gz
+      wget https://github.com/BitLox/tonos-cli/releases/download/v0.1.29/tonos-cli_v0.1.29_darwin.tar.gz
       mkdir ./tonos-cli
-      tar -xvf tonos-cli_v0.1.27_darwin.tar.gz -C ./tonos-cli
-      rm tonos-cli_v0.1.27_darwin.tar.gz
+      tar -xvf tonos-cli_v0.1.29_darwin.tar.gz -C ./tonos-cli
+      rm tonos-cli_v0.1.29_darwin.tar.gz
   fi
   cd ./tonos-cli
   wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.abi.json
@@ -144,7 +144,7 @@ clear
   
   #Link to ton.live account
   rawaddr=$(cat data/rawaddr.txt)
-  tonlive="https://${network}.ton.live/accounts?section=details&id=${rawaddr}"
+  tonlive="https://${network}.ton.live/accounts/accountDetails?id=${rawaddr}"
   echo $tonlive > account.link.txt
   mkdir to_ton-keys_folder
   cp ./data/rawaddr.txt ./to_ton-keys_folder/hostname.addr

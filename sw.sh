@@ -50,7 +50,7 @@ esac
 clear
 rawaddr=$(cat data/rawaddr.txt)
 network=$(cat data/network.txt)
-tonlive="Your transactions here: https://${network}.ton.live/accounts?section=details&id=${rawaddr}"
+tonlive="Your transactions here: https://${network}.ton.live/accounts/accountDetails?id=${rawaddr}"
 echo $tonlive
 }
 #Menu

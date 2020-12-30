@@ -229,6 +229,7 @@ echo -e "\tSecret phrase:"
 
 function setMain {
   network="MAIN";
+  url="MAIN.TON.DEV";
   echo "MAIN.TON.DEV" > data/url.txt
   echo "MAIN" > data/network.txt
   break;
@@ -236,6 +237,7 @@ function setMain {
 
 function setDev {
   network="NET";
+  url="NET.TON.DEV";
   echo "NET.TON.DEV" > data/url.txt
   echo "NET" > data/network.txt
   break;
@@ -243,6 +245,7 @@ function setDev {
 
 function setFLD {
   network="FLD";
+  url="gql.custler.net";
   echo "gql.custler.net" > data/URL.txt
   echo "FLD" > data/network.txt
   break;

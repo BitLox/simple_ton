@@ -241,7 +241,7 @@ function setDev {
   break;
 }
 
-function setDev {
+function setFLD {
   network="FLD";
   echo "gql.custler.net" > data/URL.txt
   echo "FLD" > data/network.txt

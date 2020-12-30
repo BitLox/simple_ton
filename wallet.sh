@@ -39,8 +39,9 @@ else
   cd ./tonos-cli
   wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.abi.json
   wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.tvc
+  wget https://raw.githubusercontent.com/FreeTON-Network/fld.ton.dev/main/scripts/Marvin.abi.json
   #Network configuration
-  # echo "Choose network, main or dev: "
+  # echo "Choose network, main, dev or fld: "
   # read networkInput
   # network=$networkInput
   
@@ -57,6 +58,8 @@ do
         setMain ;;
 2)
         setDev ;;
+3)
+        setFLD ;;
 esac
 read -n 1 line
 done
@@ -93,7 +96,7 @@ clear
   
   
   
-./tonos-cli config --url https://$network.ton.dev >> log_step1.txt
+./tonos-cli config --url https://$url >> log_step1.txt
 ./tonos-cli config --wc $workchain >> log_step1.txt
   
 
@@ -226,13 +229,22 @@ echo -e "\tSecret phrase:"
 
 function setMain {
   network="MAIN";
+  echo "MAIN.TON.DEV" > data/url.txt
   echo "MAIN" > data/network.txt
   break;
 }
 
 function setDev {
   network="NET";
+  echo "NET.TON.DEV" > data/url.txt
   echo "NET" > data/network.txt
+  break;
+}
+
+function setDev {
+  network="FLD";
+  echo "gql.custler.net" > data/URL.txt
+  echo "FLD" > data/network.txt
   break;
 }
 
@@ -305,6 +317,7 @@ function networkMenu {
   echo
   echo -e "\t1. MAIN"
   echo -e "\t2. DEV"
+  echo -e "\t3. FLD"
   echo -en "\n\tEnter choice: "
   read -n 1 optionNet
   }

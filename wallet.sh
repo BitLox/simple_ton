@@ -38,10 +38,10 @@ else
       rm tonos-cli_v0.1.29_darwin.tar.gz
   fi
   cd ./tonos-cli
-  # wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.abi.json
-  # wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.tvc
-  wget http://localhost/SafeMultisigWallet.abi.json
-  wget http://localhost/SafeMultisigWallet.tvc
+  wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.abi.json
+  wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.tvc
+  # wget http://localhost/SafeMultisigWallet.abi.json
+  # wget http://localhost/SafeMultisigWallet.tvc
   #Network configuration
   # echo "Choose network, main or dev: "
   # read networkInput
@@ -93,6 +93,8 @@ max=$mValue
 for (( i=1; i < max+1; i++ ))
 do
   loopCount=$i
+echo "#######################################################################" >> log_step1.txt
+echo "#######################################################################" >> log_step1.txt
   #Creating a folder for keys
   eval "mkdir -p ${i}_data"
   
@@ -163,10 +165,16 @@ do
   rawaddr=$(cat ${loopCount}_data/rawaddr.txt)
   tonlive="https://${network}.ton.live/accounts?section=details&id=${rawaddr}"
   echo $tonlive > ${loopCount}_data/account.link.txt
-  mkdir ${loopCount}_data/to_ton-keys_folder
-  cp ./${loopCount}_data/rawaddr.txt ./${loopCount}_data/to_ton-keys_folder/hostname.addr
-  cp ./${loopCount}_data/deploy.keys.json ./${loopCount}_data/to_ton-keys_folder/msig.keys.json
-  mkdir ./${loopCount}_data/SWData
+  # mkdir ${loopCount}_data/to_ton-keys_folder
+  # cp ./${loopCount}_data/rawaddr.txt ./${loopCount}_data/to_ton-keys_folder/hostname.addr
+  # cp ./${loopCount}_data/deploy.keys.json ./${loopCount}_data/to_ton-keys_folder/msig.keys.json
+  
+  #make balance checker command
+  balance=".././tonos-cli account ${rawaddr}"
+  echo $balance > ${loopCount}_data/GetBalance.sh
+  chmod +x ${loopCount}_data/GetBalance.sh
+  
+  # mkdir ./${loopCount}_data/SWData
   # cd ..
   echo `pwd`
   # clear
@@ -182,40 +190,37 @@ fi
 
 function  checkbalance() {
 clear
-# echo `pwd`
-cd ./tonos-cli/${loopCount}_data
+echo `pwd`
+cd ./tonos-cli/1_data
+currentAddr=$(cat rawaddr.txt)
+echo "Checking balance for ${currentAddr}"
 file="GetBalance.sh"
 
 if [ -f ${file} ]
 then
-  ./GetBalance.sh > SWData/lastbalance.txt
+  ./GetBalance.sh > lastbalance.txt
   if [ "$os_type" == 'LINUX' ] 
   then
-    sed -e '/bal/!d' -e 's/bal.*:       //' SWData/lastbalance.txt
+    sed -e '/bal/!d' -e 's/bal.*:       //' lastbalance.txt
     cd ../..
   fi
   if [ "$os_type" == 'OSX' ]
     then
-    sed '/bal/!d' SWData/lastbalance.txt > SWData/lastbalance.tmp.txt
-    sed 's/bal.*:       //' SWData/lastbalance.tmp.txt > SWData/lastbalance.txt
-    rm SWData/lastbalance.tmp.txt
-    cat SWData/lastbalance.txt
+    sed '/bal/!d' lastbalance.txt > lastbalance.tmp.txt
+    sed 's/bal.*:       //' lastbalance.tmp.txt > lastbalance.txt
+    rm lastbalance.tmp.txt
+    cat lastbalance.txt
     cd ../..
   fi
 else
-  rawaddr=$(cat rawaddr.txt)
-  balance=".././tonos-cli account ${rawaddr}"
-  echo $balance > GetBalance.sh
-  chmod +x GetBalance.sh
-  clear
-  cd ../.. 
-  ./wallet.sh
+  echo "you are not supposed to be here"
+  echo `pwd`
 fi
 }
 
 function  showaddress() {
   clear
-  cat ./tonos-cli/${i}_data/rawaddr.txt 
+  cat ./tonos-cli/1_data/rawaddr.txt 
 }
 
 function setGenPhrase() {
@@ -251,23 +256,23 @@ echo -e "\tSecret phrase:"
 function setMain {
   network="MAIN";
   echo "MAIN" > network.txt
-  break;
+  # break;
 }
 
 function setDev {
   network="NET";
   echo "NET" > network.txt
-  break;
+  # break;
 }
 
 function setZero {
   workchain="0";
-  break;
+  # break;
 }
 
 function setMinusOne {
   workchain="-1";
-  break;
+  # break;
 }
 
 function  step2 {
@@ -310,7 +315,7 @@ cd ..
 function phraseMenu {
   clear
   echo `pwd`
-  echo -e "\tSecret phrase: " 
+  echo -e "\tSecret phrase for custodian ${loopCount}: " 
   echo
   echo -e "\t1. Auto-generate phrase"
   echo -e "\t2. Input custom phrase"

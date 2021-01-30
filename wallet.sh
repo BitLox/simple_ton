@@ -256,23 +256,23 @@ echo -e "\tSecret phrase:"
 function setMain {
   network="MAIN";
   echo "MAIN" > network.txt
-  # break;
+  break;
 }
 
 function setDev {
   network="NET";
   echo "NET" > network.txt
-  # break;
+  break;
 }
 
 function setZero {
   workchain="0";
-  # break;
+  break;
 }
 
 function setMinusOne {
   workchain="-1";
-  # break;
+  break;
 }
 
 function  step2 {

@@ -43,10 +43,10 @@ else
       rm tonos-cli_v0.1.29_darwin.tar.gz
   fi
   cd ./tonos-cli
-  # wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.abi.json
-  # wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.tvc
-  wget http://localhost/SafeMultisigWallet.abi.json
-  wget http://localhost/SafeMultisigWallet.tvc
+  wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.abi.json
+  wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.tvc
+  # wget http://localhost/SafeMultisigWallet.abi.json
+  # wget http://localhost/SafeMultisigWallet.tvc
   
   read -p "N of M wallet - Enter N :  " nValue
   clear

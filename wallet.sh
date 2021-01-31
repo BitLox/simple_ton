@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Check your Bash with echo "${BASH_VERSION}"
+# Works with 4.3.11(1)-release
+# Does not work with 5.0.17(1)-release
+
+
 case "$OSTYPE" in
   solaris*) os_type="SOLARIS" ;; 
   darwin*)  os_type="OSX" ;; 
@@ -38,14 +43,10 @@ else
       rm tonos-cli_v0.1.29_darwin.tar.gz
   fi
   cd ./tonos-cli
-  wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.abi.json
-  wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.tvc
-  # wget http://localhost/SafeMultisigWallet.abi.json
-  # wget http://localhost/SafeMultisigWallet.tvc
-  #Network configuration
-  # echo "Choose network, main or dev: "
-  # read networkInput
-  # network=$networkInput
+  # wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.abi.json
+  # wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.tvc
+  wget http://localhost/SafeMultisigWallet.abi.json
+  wget http://localhost/SafeMultisigWallet.tvc
   
   read -p "N of M wallet - Enter N :  " nValue
   clear
@@ -170,7 +171,7 @@ echo "#######################################################################" >
   # cp ./${loopCount}_data/deploy.keys.json ./${loopCount}_data/to_ton-keys_folder/msig.keys.json
   
   #make balance checker command
-  balance=".././tonos-cli account ${rawaddr}"
+  balance=".././tonos-cli --url https://${network}.ton.live account ${rawaddr}"
   echo $balance > ${loopCount}_data/GetBalance.sh
   chmod +x ${loopCount}_data/GetBalance.sh
   
@@ -283,30 +284,43 @@ clear
 cd ./tonos-cli
 #Deploy the multisignature code and data to the blockchain (3.2.4)
 
+# mValue=$(cat M.txt)
 
-
-pubkey=$(cat data/pubkey.txt)
-
-deploy="./tonos-cli deploy SafeMultisigWallet.tvc '{\"owners\":[\"0x${pubkey}\",\"0x${cosigner1Pubkey}\",\"0x${cosigner2Pubkey}\"],\"reqConfirms\":${nValue}}' --abi SafeMultisigWallet.abi.json --sign deploy.keys.json "
+deploy="./tonos-cli deploy SafeMultisigWallet.tvc '{\"owners\":["
 echo $deploy  > deploy.tmp.sh
-chmod +x deploy.tmp.sh
-./deploy.tmp.sh >> log_step2.txt
+mValue=$(cat M.txt)
+
+for (( j=1; j < mValue+1 ; j++ ))
+do
+  loopCount2=$j
+  pubkey=$(cat ${loopCount2}_data/pubkey.txt)
+  signers="\"0x${pubkey}\","
+  echo $signers >> deploy.tmp.sh
+done
+nValue=$(cat N.txt)
+deploy2="],\"reqConfirms\":${nValue}}' --abi SafeMultisigWallet.abi.json --sign 1_data/deploy.keys.json"
+echo $deploy2 >> deploy.tmp.sh
+sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/ /g' deploy.tmp.sh | sed 's/, ]/]/g' > deploy.tmp2.sh
+
+chmod +x deploy.tmp2.sh
+./deploy.tmp2.sh | tee -a "log_step2.txt"
 rm deploy.tmp.sh
+rm deploy.tmp2.sh
 #Querying the status of the multisignature wallet in the blockchain
-rawaddr=$(cat data/rawaddr.txt)
+rawaddr=$(cat 1_data/rawaddr.txt)
 status="./tonos-cli account ${rawaddr}"
 echo $status > StatCheck.sh
 chmod +x StatCheck.sh
-./StatCheck.sh >> log_step2.txt
+./StatCheck.sh | tee -a "log_step2.txt"
 
 
 #Requesting the list of custodian public keys from the blockchain
 custocheck="./tonos-cli run ${rawaddr} getCustodians {} --abi SafeMultisigWallet.abi.json"
 echo $custocheck > custocheck.tmp.sh
 chmod +x custocheck.tmp.sh
-./custocheck.tmp.sh >> log_step2.txt
+./custocheck.tmp.sh | tee -a "log_step2.txt"
 rm custocheck.tmp.sh
-clear
+# clear
 echo -e "Succeeded\n\nLogs: ./log_step2.txt\n\nTo check the log:\ncat log_step2.txt"
 cd ..
 }
@@ -355,10 +369,10 @@ echo
 echo `pwd`
 echo
 echo -e "\tWallet deployment\n"
-echo -e "\t1. Step 1"
+echo -e "\t1. Configure wallet"
 echo -e "\t2. Check balance"
-echo -e "\t3. Step 2"
-echo -e "\t4. Show address"
+echo -e "\t3. Show address"
+echo -e "\t4. Deploy wallet"
 echo -e "\t0. Exit"
 echo -en "\n\tEnter number: "
 read -n 1 option
@@ -377,9 +391,9 @@ do
 2)
         checkbalance ;;
 3)
-        step2 ;;
+        showaddress  ;;
 4)
-        showaddress ;;
+        step2 ;;
 *)
         clear
 echo "Need to choose";;

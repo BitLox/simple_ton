@@ -171,7 +171,7 @@ echo "#######################################################################" >
   # cp ./${loopCount}_data/deploy.keys.json ./${loopCount}_data/to_ton-keys_folder/msig.keys.json
   
   #make balance checker command
-  balance=".././tonos-cli --url https://${network}.ton.live account ${rawaddr}"
+  balance=".././tonos-cli --url https://${network}.ton.dev account ${rawaddr}"
   echo $balance > ${loopCount}_data/GetBalance.sh
   chmod +x ${loopCount}_data/GetBalance.sh
   

@@ -4,6 +4,7 @@ cd tonos-cli
 
 folder="SWData"
 
+
 if [ -d ${folder} ]
 then
   function checkbalance {

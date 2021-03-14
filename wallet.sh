@@ -232,7 +232,7 @@ function setMain {
   url="MAIN.TON.DEV";
   echo "MAIN.TON.DEV" > data/url.txt
   echo "MAIN" > data/network.txt
-  break;
+  # break;
 }
 
 function setDev {
@@ -240,7 +240,7 @@ function setDev {
   url="NET.TON.DEV";
   echo "NET.TON.DEV" > data/url.txt
   echo "NET" > data/network.txt
-  break;
+  # break;
 }
 
 function setFLD {
@@ -248,7 +248,7 @@ function setFLD {
   url="gql.custler.net";
   echo "gql.custler.net" > data/URL.txt
   echo "FLD" > data/network.txt
-  break;
+  # break;
 }
 
 function setZero {

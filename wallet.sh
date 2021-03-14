@@ -21,21 +21,36 @@ else
   echo "${folder} does not exist, fetching"
   echo
   #Download components and create a folder
-  
+
   if [ "$os_type" == 'LINUX' ] 
-    then
-      wget https://github.com/tonlabs/tonos-cli/releases/download/v0.1.29/tonos-cli_v0.1.29_linux.tar.gz
-      mkdir ./tonos-cli
-      tar -xvf tonos-cli_v0.1.29_linux.tar.gz -C ./tonos-cli
-      rm tonos-cli_v0.1.29_linux.tar.gz
+  then
+    wget http://sdkbinaries.tonlabs.io/tonos-cli-0_6_0-linux.zip
+    unzip tonos-cli-0_6_0-linux.zip 
+    rm tonos-cli-0_6_0-linux.zip
   fi
   if [ "$os_type" == 'OSX' ]
-    then
-      wget https://github.com/BitLox/tonos-cli/releases/download/v0.1.29/tonos-cli_v0.1.29_darwin.tar.gz
-      mkdir ./tonos-cli
-      tar -xvf tonos-cli_v0.1.29_darwin.tar.gz -C ./tonos-cli
-      rm tonos-cli_v0.1.29_darwin.tar.gz
+  then
+    wget http://sdkbinaries.tonlabs.io/tonos-cli-0_6_0-darwin.zip
+    unzip tonos-cli-0_6_0-darwin.zip 
+    rm tonos-cli-0_6_0-darwin.zip
   fi
+
+  
+  # if [ "$os_type" == 'LINUX' ] 
+  #   then
+  #     wget https://github.com/tonlabs/tonos-cli/releases/download/v0.1.29/tonos-cli_v0.1.29_linux.tar.gz
+  #     mkdir ./tonos-cli
+  #     tar -xvf tonos-cli_v0.1.29_linux.tar.gz -C ./tonos-cli
+  #     rm tonos-cli_v0.1.29_linux.tar.gz
+  # fi
+  # if [ "$os_type" == 'OSX' ]
+  #   then
+  #     wget https://github.com/BitLox/tonos-cli/releases/download/v0.1.29/tonos-cli_v0.1.29_darwin.tar.gz
+  #     mkdir ./tonos-cli
+  #     tar -xvf tonos-cli_v0.1.29_darwin.tar.gz -C ./tonos-cli
+  #     rm tonos-cli_v0.1.29_darwin.tar.gz
+  # fi
+
   cd ./tonos-cli
   wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.abi.json
   wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.tvc

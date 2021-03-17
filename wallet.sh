@@ -30,11 +30,13 @@ else
   fi
   if [ "$os_type" == 'OSX' ]
   then
-    wget http://sdkbinaries.tonlabs.io/tonos-cli-0_6_0-darwin.zip
+    wget http://localhost/tonos-cli-0_6_0-darwin.zip
+    # wget http://sdkbinaries.tonlabs.io/tonos-cli-0_6_0-darwin.zip
     unzip tonos-cli-0_6_0-darwin.zip 
     rm tonos-cli-0_6_0-darwin.zip
   fi
 
+  # mkdir ./tonos-cli
   
   # if [ "$os_type" == 'LINUX' ] 
   #   then
@@ -51,7 +53,7 @@ else
   #     rm tonos-cli_v0.1.29_darwin.tar.gz
   # fi
 
-  cd ./tonos-cli
+  # cd ./tonos-cli
   wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.abi.json
   wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.tvc
   wget https://raw.githubusercontent.com/FreeTON-Network/fld.ton.dev/main/scripts/Marvin.abi.json
@@ -65,20 +67,40 @@ mkdir data
   
   
 #While & Case
-while [ $? -ne 1 ]
-do
-        networkMenu
-        case $optionNet in
-1)
-        setMain ;;
-2)
-        setDev ;;
-3)
-        setFLD ;;
+
+
+networkMenu
+
+read -p "" optionNet
+
+case $optionNet in
+  1)
+    setMain 
+    ;;
+  2)
+    setDev 
+    ;;
+  3)
+    setFLD 
+    ;;
 esac
-read -n 1 line
-done
 clear
+
+
+# while [ $? -ne 1 ]
+# do
+#         networkMenu
+#         case $optionNet in
+# 1)
+#         setMain ;;
+# 2)
+#         setDev ;;
+# 3)
+#         setFLD ;;
+# esac
+# read -n 1 line
+# done
+# clear
 
 #While & Case
 while [ $? -ne 1 ]
@@ -247,7 +269,7 @@ function setMain {
   url="MAIN.TON.DEV";
   echo "MAIN.TON.DEV" > data/url.txt
   echo "MAIN" > data/network.txt
-  break;
+  # break;
 }
 
 function setDev {
@@ -255,7 +277,7 @@ function setDev {
   url="NET.TON.DEV";
   echo "NET.TON.DEV" > data/url.txt
   echo "NET" > data/network.txt
-  break;
+  # break;
 }
 
 function setFLD {
@@ -263,7 +285,7 @@ function setFLD {
   url="gql.custler.net";
   echo "gql.custler.net" > data/URL.txt
   echo "FLD" > data/network.txt
-  break;
+  # break;
 }
 
 function setZero {
@@ -337,8 +359,7 @@ function networkMenu {
   echo -e "\t2. DEV"
   echo -e "\t3. FLD"
   echo -en "\n\tEnter choice: "
-  read -n 1 optionNet
-  }
+}
 
 function wcMenu {
   clear

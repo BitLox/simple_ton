@@ -12,12 +12,12 @@ esac
 function step1 {
 clear
 #Check for folder
-folder="tonos-cli"
-
-if [ -d ${folder} ]
-then
-  echo "Folder ${folder} already exists!"
-else
+# folder="tonos-cli"
+# 
+# if [ -d ${folder} ]
+# then
+#   echo "Folder ${folder} already exists!"
+# else
   echo "${folder} does not exist, fetching"
   echo
   #Download components and create a folder
@@ -36,43 +36,15 @@ else
     rm tonos-cli-0_6_0-darwin.zip
   fi
 
-  # mkdir ./tonos-cli
-  
-  # if [ "$os_type" == 'LINUX' ] 
-  #   then
-  #     wget https://github.com/tonlabs/tonos-cli/releases/download/v0.1.29/tonos-cli_v0.1.29_linux.tar.gz
-  #     mkdir ./tonos-cli
-  #     tar -xvf tonos-cli_v0.1.29_linux.tar.gz -C ./tonos-cli
-  #     rm tonos-cli_v0.1.29_linux.tar.gz
-  # fi
-  # if [ "$os_type" == 'OSX' ]
-  #   then
-  #     wget https://github.com/BitLox/tonos-cli/releases/download/v0.1.29/tonos-cli_v0.1.29_darwin.tar.gz
-  #     mkdir ./tonos-cli
-  #     tar -xvf tonos-cli_v0.1.29_darwin.tar.gz -C ./tonos-cli
-  #     rm tonos-cli_v0.1.29_darwin.tar.gz
-  # fi
-
-  # cd ./tonos-cli
   wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.abi.json
   wget https://github.com/tonlabs/ton-labs-contracts/raw/master/solidity/safemultisig/SafeMultisigWallet.tvc
   wget https://raw.githubusercontent.com/FreeTON-Network/fld.ton.dev/main/scripts/Marvin.abi.json
-  #Network configuration
-  # echo "Choose network, main, dev or fld: "
-  # read networkInput
-  # network=$networkInput
   
 #Creating a folder for keys
 mkdir data
-  
-  
-#While & Case
-
 
 networkMenu
-
 read -p "" optionNet
-
 case $optionNet in
   1)
     setMain 
@@ -86,57 +58,33 @@ case $optionNet in
 esac
 clear
 
-
-# while [ $? -ne 1 ]
-# do
-#         networkMenu
-#         case $optionNet in
-# 1)
-#         setMain ;;
-# 2)
-#         setDev ;;
-# 3)
-#         setFLD ;;
-# esac
-# read -n 1 line
-# done
-# clear
-
-#While & Case
-while [ $? -ne 1 ]
-do
-        wcMenu
-        case $optionWC in
-1)
-        setZero ;;
-2)
-        setMinusOne ;;
+wcMenu
+read -p "" optionWC
+case $optionWC in
+  1)
+    setZero 
+    ;;
+  2)
+    setMinusOne 
+    ;;
 esac
-read -n 1 line
-done
 clear
 
-#While & Case
-while [ $? -ne 1 ]
-do
-        phraseMenu
-        case $optionPhrase in
-1)
-        setGenPhrase ;;
-2)
-        setCustomPhrase ;;
+phraseMenu
+read -p "" optionPhrase
+case $optionPhrase in
+  1)
+    setGenPhrase 
+    ;;
+  2)
+    setCustomPhrase 
+    ;;
 esac
-read -n 1 line
-done
 clear
-
-  
-  
   
 ./tonos-cli config --url https://$url >> log_step1.txt
 ./tonos-cli config --wc $workchain >> log_step1.txt
   
-
   #Creating a temporary file for generating public key
   phrase=$(cat data/phrase.txt)
   pubkey="./tonos-cli genpubkey ${phrase}"
@@ -193,7 +141,7 @@ clear
   cd ..
   clear
   echo -e "Succeeded\n\nAll keys: ./data\n\nLogs: ./log_step1.txt\n\nTo check the log:\ncat log_step1.txt\n\nLink to your account (${network}.ton.live): ./account.link.txt\n\nSend some tokens to your address:\n${rawaddr}\n\nThen Step2.sh"
-fi
+# fi
 }
 
 function  checkbalance {
